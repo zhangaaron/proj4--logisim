@@ -3,9 +3,17 @@
 This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
 <lib desc="#Wiring" name="0">
     <tool name="Splitter">
-      <a name="fanout" val="16"/>
-      <a name="incoming" val="16"/>
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="8"/>
       <a name="appear" val="right"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="none"/>
+      <a name="bit2" val="none"/>
+      <a name="bit3" val="none"/>
+      <a name="bit4" val="none"/>
+      <a name="bit5" val="none"/>
+      <a name="bit6" val="none"/>
+      <a name="bit7" val="0"/>
     </tool>
     <tool name="Pin">
       <a name="facing" val="north"/>
@@ -21,19 +29,26 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="facing" val="north"/>
     </tool>
     <tool name="Constant">
+      <a name="facing" val="north"/>
+    </tool>
+    <tool name="Power">
       <a name="facing" val="south"/>
-      <a name="value" val="0x0"/>
     </tool>
   </lib>
   <lib desc="#Gates" name="1">
     <tool name="NOT Gate">
+      <a name="facing" val="north"/>
       <a name="size" val="20"/>
+    </tool>
+    <tool name="Buffer">
+      <a name="width" val="3"/>
     </tool>
     <tool name="AND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </tool>
     <tool name="OR Gate">
+      <a name="width" val="16"/>
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </tool>
@@ -42,13 +57,12 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="inputs" val="2"/>
     </tool>
     <tool name="NOR Gate">
-      <a name="size" val="30"/>
+      <a name="facing" val="south"/>
       <a name="inputs" val="2"/>
     </tool>
     <tool name="XOR Gate">
-      <a name="size" val="30"/>
+      <a name="facing" val="west"/>
       <a name="inputs" val="2"/>
-      <a name="xor" val="odd"/>
     </tool>
     <tool name="XNOR Gate">
       <a name="size" val="30"/>
@@ -71,17 +85,15 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="dataWidth" val="16"/>
     </tool>
     <tool name="ROM">
-      <a name="addrWidth" val="16"/>
-      <a name="dataWidth" val="16"/>
-      <a name="contents">addr/data: 16 16
+      <a name="contents">addr/data: 8 8
 0
 </a>
     </tool>
   </lib>
   <lib desc="#Plexers" name="3">
     <tool name="Multiplexer">
+      <a name="select" val="4"/>
       <a name="width" val="16"/>
-      <a name="enable" val="false"/>
     </tool>
     <tool name="Demultiplexer">
       <a name="enable" val="false"/>
@@ -99,13 +111,13 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="width" val="16"/>
     </tool>
     <tool name="Multiplier">
-      <a name="width" val="16"/>
+      <a name="width" val="1"/>
     </tool>
     <tool name="Divider">
       <a name="width" val="16"/>
     </tool>
     <tool name="Negator">
-      <a name="width" val="16"/>
+      <a name="width" val="1"/>
     </tool>
     <tool name="Comparator">
       <a name="width" val="16"/>
@@ -122,6 +134,7 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="valign" val="base"/>
     </tool>
   </lib>
+  <lib desc="file#alu-harness.circ" name="7"/>
   <main name="main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -130,8 +143,8 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
   </options>
   <mappings>
     <tool lib="6" map="Button2" name="Menu Tool"/>
-    <tool lib="6" map="Button3" name="Menu Tool"/>
     <tool lib="6" map="Ctrl Button1" name="Menu Tool"/>
+    <tool lib="6" map="Button3" name="Menu Tool"/>
   </mappings>
   <toolbar>
     <tool lib="6" name="Poke Tool"/>
@@ -174,10 +187,26 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(720,90)" to="(1000,90)"/>
     <wire from="(1000,60)" to="(1000,90)"/>
     <wire from="(290,60)" to="(290,90)"/>
-    <comp lib="0" loc="(340,50)" name="Tunnel">
+    <comp lib="6" loc="(469,123)" name="Text">
+      <a name="text" val="DO NOT CHANGE THE LOCATIONS OF THE INPUTS OR OUTPUTS! IF YOU DO SO, YOU NEED TO MAKE SURE THE PINS ARE IN THE RIGHT PLACES!"/>
+    </comp>
+    <comp lib="0" loc="(930,50)" name="Pin">
+      <a name="facing" val="south"/>
+      <a name="output" val="true"/>
+      <a name="width" val="16"/>
+      <a name="label" val="Display 1"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(930,50)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="width" val="16"/>
-      <a name="label" val="r0"/>
+      <a name="label" val="d1"/>
+    </comp>
+    <comp lib="0" loc="(1000,950)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="Data Mem Write"/>
+      <a name="labelloc" val="east"/>
     </comp>
     <comp lib="0" loc="(640,50)" name="Tunnel">
       <a name="facing" val="north"/>
@@ -187,23 +216,23 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <comp lib="6" loc="(322,868)" name="Text">
       <a name="text" val="Remember, this circuit is loaded from the harness to be tested!"/>
     </comp>
-    <comp lib="6" loc="(612,96)" name="Text">
-      <a name="text" val="These are OUTPUTS of the circuit"/>
+    <comp lib="0" loc="(790,50)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="width" val="16"/>
+      <a name="label" val="d0"/>
     </comp>
-    <comp lib="0" loc="(790,50)" name="Pin">
+    <comp lib="6" loc="(179,490)" name="Text">
+      <a name="text" val="This is the current PC that you need to send as OUTPUT"/>
+    </comp>
+    <comp lib="0" loc="(640,50)" name="Pin">
       <a name="facing" val="south"/>
       <a name="output" val="true"/>
       <a name="width" val="16"/>
-      <a name="label" val="Display 0"/>
+      <a name="label" val="r3"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="6" loc="(469,123)" name="Text">
-      <a name="text" val="DO NOT CHANGE THE LOCATIONS OF THE INPUTS OR OUTPUTS! IF YOU DO SO, YOU NEED TO MAKE SURE THE PINS ARE IN THE RIGHT PLACES!"/>
-    </comp>
-    <comp lib="0" loc="(180,580)" name="Pin">
-      <a name="width" val="16"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="From Instr Mem"/>
+    <comp lib="6" loc="(612,96)" name="Text">
+      <a name="text" val="These are OUTPUTS of the circuit"/>
     </comp>
     <comp lib="0" loc="(1000,890)" name="Pin">
       <a name="facing" val="west"/>
@@ -212,15 +241,16 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="Data Mem Addr"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="6" loc="(321,843)" name="Text">
-      <a name="text" val="This is a CLK that is an INPUT driven from the harness."/>
-    </comp>
-    <comp lib="0" loc="(30,530)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
+    <comp lib="0" loc="(180,660)" name="Pin">
       <a name="width" val="16"/>
-      <a name="label" val="To Instr Mem"/>
-      <a name="labelloc" val="east"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="From Instr Mem"/>
+    </comp>
+    <comp lib="6" loc="(1044,782)" name="Text">
+      <a name="text" val="These are OUTPUTS of the circuit"/>
+    </comp>
+    <comp lib="6" loc="(167,622)" name="Text">
+      <a name="text" val="This is the instruction that you would receive as INPUT"/>
     </comp>
     <comp lib="0" loc="(440,50)" name="Pin">
       <a name="facing" val="south"/>
@@ -229,10 +259,12 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="r1"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(930,50)" name="Tunnel">
-      <a name="facing" val="north"/>
+    <comp lib="0" loc="(60,550)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
       <a name="width" val="16"/>
-      <a name="label" val="d1"/>
+      <a name="label" val="To Instr Mem"/>
+      <a name="labelloc" val="east"/>
     </comp>
     <comp lib="0" loc="(270,790)" name="Pin">
       <a name="facing" val="north"/>
@@ -246,32 +278,6 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="width" val="16"/>
       <a name="label" val="r0"/>
       <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(790,50)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="width" val="16"/>
-      <a name="label" val="d0"/>
-    </comp>
-    <comp lib="0" loc="(640,50)" name="Pin">
-      <a name="facing" val="south"/>
-      <a name="output" val="true"/>
-      <a name="width" val="16"/>
-      <a name="label" val="r3"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(1000,950)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="label" val="Data Mem Write"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="6" loc="(167,622)" name="Text">
-      <a name="text" val="This is the instruction that you would receive as INPUT"/>
-    </comp>
-    <comp lib="0" loc="(540,50)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="width" val="16"/>
-      <a name="label" val="r2"/>
     </comp>
     <comp lib="0" loc="(1000,840)" name="Pin">
       <a name="facing" val="west"/>
@@ -287,23 +293,109 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="r2"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="6" loc="(1044,782)" name="Text">
-      <a name="text" val="These are OUTPUTS of the circuit"/>
-    </comp>
-    <comp lib="0" loc="(930,50)" name="Pin">
+    <comp lib="0" loc="(790,50)" name="Pin">
       <a name="facing" val="south"/>
       <a name="output" val="true"/>
       <a name="width" val="16"/>
-      <a name="label" val="Display 1"/>
+      <a name="label" val="Display 0"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="6" loc="(192,497)" name="Text">
-      <a name="text" val="This is the current PC that you need to send as OUTPUT"/>
+    <comp lib="6" loc="(321,843)" name="Text">
+      <a name="text" val="This is a CLK that is an INPUT driven from the harness."/>
+    </comp>
+    <comp lib="0" loc="(340,50)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="width" val="16"/>
+      <a name="label" val="r0"/>
     </comp>
     <comp lib="0" loc="(440,50)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="width" val="16"/>
       <a name="label" val="r1"/>
+    </comp>
+    <comp lib="0" loc="(540,50)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="width" val="16"/>
+      <a name="label" val="r2"/>
+    </comp>
+  </circuit>
+  <circuit name="DataMemory">
+    <a name="circuit" val="DataMemory"/>
+    <a name="clabel" val=""/>
+    <a name="clabelup" val="east"/>
+    <a name="clabelfont" val="SansSerif plain 12"/>
+    <appear>
+      <rect fill="none" height="63" stroke="#000000" stroke-width="2" width="152" x="167" y="59"/>
+      <circ-port height="8" pin="150,60" width="8" x="166" y="66"/>
+      <circ-port height="8" pin="150,220" width="8" x="166" y="96"/>
+      <circ-port height="10" pin="520,220" width="10" x="315" y="65"/>
+      <circ-port height="8" pin="510,320" width="8" x="306" y="106"/>
+      <circ-port height="8" pin="310,280" width="8" x="216" y="116"/>
+      <circ-port height="8" pin="350,270" width="8" x="286" y="116"/>
+      <circ-anchor facing="east" height="6" width="6" x="317" y="67"/>
+    </appear>
+    <wire from="(410,320)" to="(510,320)"/>
+    <wire from="(330,320)" to="(410,320)"/>
+    <wire from="(310,260)" to="(310,280)"/>
+    <wire from="(410,70)" to="(410,320)"/>
+    <wire from="(150,60)" to="(400,60)"/>
+    <wire from="(440,220)" to="(520,220)"/>
+    <wire from="(290,260)" to="(290,270)"/>
+    <wire from="(350,260)" to="(350,270)"/>
+    <wire from="(380,220)" to="(440,220)"/>
+    <wire from="(150,220)" to="(240,220)"/>
+    <wire from="(420,60)" to="(440,60)"/>
+    <wire from="(330,260)" to="(330,270)"/>
+    <wire from="(440,60)" to="(440,220)"/>
+    <wire from="(330,290)" to="(330,320)"/>
+    <comp lib="0" loc="(520,220)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="16"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="DataOut"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(290,270)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="0" loc="(510,320)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="MemWrite"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(350,270)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="RESET"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(150,60)" name="Pin">
+      <a name="width" val="16"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="DataIn"/>
+    </comp>
+    <comp lib="0" loc="(310,280)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="clk"/>
+    </comp>
+    <comp lib="0" loc="(150,220)" name="Pin">
+      <a name="width" val="16"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="Address"/>
+    </comp>
+    <comp lib="1" loc="(330,270)" name="NOT Gate">
+      <a name="facing" val="north"/>
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="2" loc="(380,220)" name="RAM">
+      <a name="addrWidth" val="16"/>
+      <a name="dataWidth" val="16"/>
+    </comp>
+    <comp lib="1" loc="(420,60)" name="Controlled Buffer">
+      <a name="width" val="16"/>
     </comp>
   </circuit>
 </project>
